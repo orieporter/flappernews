@@ -34,7 +34,9 @@ app.factory('posts', ['$http', function ($http) {
     };
 
     o.addComment = function (id, comment) {
-        return $http.post('/posts/' + id + '/comments', comment);
+        return $http.post('/posts/' + id + '/comments', comment).then(function (response) {
+            return response.data;
+        });
     };
 
     o.upvoteComment = function (post, comment) {
