@@ -33,8 +33,13 @@ app.factory('posts', ['$http', function ($http) {
         });
     };
 
-    o.addComment = function (id, comment) {
-        return $http.post('/posts/' + id + '/comments', comment);
+    o.addComment = function (id, comment, post) {
+        return $http.post('/posts/' + id + '/comments', comment).then(function (response) {
+            console.log("got to 3");
+            post.comments.push(response.data);
+            console.log("got to 4");
+            return response.data;
+        });
     };
 
     o.upvoteComment = function (post, comment) {
@@ -80,10 +85,8 @@ app.controller('PostsCtrl', [
             posts.addComment(post._id, {
                 body: $scope.body,
                 author: 'user'
-            }).then(function (response) {
-                $scope.post.comments.push(response.data);
-                return response.data;
-            });
+            },
+            $scope.post);
             $scope.body = '';
         };
 

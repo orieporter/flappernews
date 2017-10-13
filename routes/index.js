@@ -85,6 +85,7 @@ router.put('/posts/:post/comments/:comment/upvote', function (req, res, next) {
 });
 
 router.post('/posts/:post/comments', function (req, res, next) {
+    console.log("got to 1");
     var comment = new Comment(req.body);
     comment.post = req.post;
 
@@ -95,6 +96,7 @@ router.post('/posts/:post/comments', function (req, res, next) {
         req.post.save(function (err, post) {
             if (err) { return next(err); }
 
+            console.log("got to 2");
             res.json(comment);
         });
     });
